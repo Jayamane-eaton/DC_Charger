@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+   <ModelName>SWC_InpMgmt_AFE</ModelName>
+   <SubsystemPath>SWC_InpMgmt_AFE</SubsystemPath>
+   <TestHarnessName>InpMgmt_AFE_RMS</TestHarnessName>
+   <SimulationTime>1</SimulationTime>
+   <LocalVariables/>
+   <TestSequences>
+      <Test>
+         <TopLevel>
+            <Name>SWC_MaiDetnAlg_F50HZ</Name>
+            <Actions>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Mains supply with 50HZ frequency</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep/>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>SWC_MaiDetnAlg_F50HZ_SetValues</Name>
+            <Actions>
+               <SetInput>%HWInGridVRru_SignalBuilder_Group1</SetInput>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(180,msec)</Condition>
+               <NextStep>SWC_MaiDetnAlg_F50HZ_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>SWC_MaiDetnAlg_F50HZ_VerifyOutputs</Name>
+            <Actions>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>InMgmtGrid_VRrf==uint16(7.47)</Verify>
+            </Actions>
+            <Description>Verify outputs</Description>
+            <Transition/>
+         </Step>
+      </Test>
+   </TestSequences>
+</Root>

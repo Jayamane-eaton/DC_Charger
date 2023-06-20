@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+   <ModelName>SWC_InpMgmt_AFE</ModelName>
+   <SubsystemPath>SWC_InpMgmt_AFE</SubsystemPath>
+   <TestHarnessName>Inmgmt</TestHarnessName>
+   <SimulationTime>1</SimulationTime>
+   <LocalVariables/>
+   <TestSequences>
+      <Test>
+         <TopLevel>
+            <Name>BUCK_Diagc_INIT</Name>
+            <Actions>
+               <SetInput>HWIn_Grid_V_R_ru=uint16(220)</SetInput>
+               <SetInput>HWIn_Grid_V_Y_ru=uint16(220)</SetInput>
+               <SetInput>HWIn_Grid_V_B_ru=uint16(220)</SetInput>
+               <SetInput>HWIn_Grid_I_R_ru=uint16(220)</SetInput>
+               <SetInput>HWIn_Grid_I_Y_ru=uint16(220)</SetInput>
+               <SetInput>HWIn_Grid_I_B_ru=uint16(440)</SetInput>
+               <SetInput>HWIn_DCV_Act_ru=uint16(440)</SetInput>
+               <SetInput>HWInCom_Requested_DCV_Ref_ru=uint16(0)</SetInput>
+               <SetInput>HWIn_AFE_IGBTTemp=false</SetInput>
+               <SetInput>BSWIn_AFE_GDR=uint16(0)</SetInput>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Test that outputs contains initial values till 200us.</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep/>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>BUCK_Diagc_INIT_SetValues</Name>
+            <Actions>
+               <SetInput>HWIn_DCV_Act_ru=uint16(2149)</SetInput>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(400,msec)</Condition>
+               <NextStep>BUCK_Diagc_INIT_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>BUCK_Diagc_INIT_VerifyOutputs</Name>
+            <Actions>
+               <SetInput>HWIn_DCV_Act_ru=uint16(2149)</SetInput>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>InMgmt_DCV_Act_rf==uint16(2149)	</Verify>
+            </Actions>
+            <Description>Verify fault status when input is not faulted</Description>
+            <Transition/>
+         </Step>
+      </Test>
+   </TestSequences>
+</Root>

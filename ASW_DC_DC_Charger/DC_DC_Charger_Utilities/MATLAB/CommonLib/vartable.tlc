@@ -1,0 +1,119 @@
+%% File : vartable.tlc
+%% $Date: 2005/08/31 22:20:51 $
+%%
+%% L Brackney, T Corbett and J Rumsey
+%% $Revision: 1.5 $
+%% Copyright 2005 NgEK.
+%%
+%% Updated by: Bhopte, Abhijeet
+%% $Date: 07/14/2020 3:30 PM
+
+%% Abstract:
+%%      sfunction vartable block target file
+
+%implements "vartable" "C"
+
+%function Outputs(block, system) Output
+{
+  /********************************************************************************
+   * Make a local array containing the input data
+   *
+   * NOTE: A more efficient way to do this would be to simply access the data
+   * directly when it is needed instead of storing it in a local variable
+   ********************************************************************************/
+%assign inputDataType  = LibBlockInputSignalDataTypeName(0, "")
+%assign inputDataWidth = LibDataInputPortWidth(0)
+%assign Mode           = CAST("Number",Parameter[0].Value[0])
+
+%<inputDataType> data[%<inputDataWidth>];
+%<inputDataType> *y;
+%if ISEQUAL(%<Mode>,1)
+    %<inputDataType> slope;
+%endif
+%<inputDataType> first;
+%<inputDataType> last;
+%<inputDataType> NaN = (unsigned) 0xFFFFFFFF;
+int_T start, end, i, K;
+start = 0;
+end = 0;
+
+K = (%<inputDataWidth> -1 )/ 2;
+
+%foreach J = %<inputDataWidth>
+  data[%<J>] = %<LibBlockInputSignal(0,"","",J)>;
+%endforeach
+
+first = data[1];
+last  = data[K];
+
+y = &(%<LibBlockOutputSignal(0,"","",0)>);
+
+for (i = 0; i < K; i++)
+   {
+      if (( data[0] >= data[i+1] ) && ( data[0] <= data[i+2] ))      /* Get indices of X values    */
+      {                                                              /* that bound the input       */
+          start = i+1;                                               /* assuming that X table      */
+          end   = i+2;                                               /* entries are in ascending   */
+          break;                                                     /* order                      */
+      }
+      if (( data[0] <= data[i+1] ) && ( data[0] >= data[i+2] ))      /* Look in both directions    */
+      {                                                              /* in case X table entries    */
+         start = i+1;                                                /* are given in descending    */
+         end   = i+2;                                                /* order                      */
+         break;
+      }
+   }
+
+if ( data[0] == NaN )
+        y[0] = data[K+K];
+else if (( first < last ) && ( data[0] < data[1] ))                  /* Clamp on lower end of      */
+        y[0] = data[K+1];                                            /* the table                  */
+else if (( first < last ) && ( data[0] > data[K] ))                  /* or the upper end of        */
+        y[0] = data[K+K];                                            /* the table                  */
+else if (( first > last ) && ( data[0] < data[K] ))                  /* Handle tables with         */
+        y[0] = data[K+K];                                            /* descending X values also   */
+else if (( first > last ) && ( data[0] > data[1] ))
+        y[0] = data[K+1];
+else if ( first == last )
+        y[0] = data[K+1];
+else
+   {
+     %if ISEQUAL(%<Mode>,1)
+         slope   = (data[start+K]-data[end+K])/(data[start]-data[end]);  /* Interpolate values within table bounds  */
+         y[0]    = slope*(data[0]-data[start]) + data[start+K];
+     %endif
+     %if ISEQUAL(%<Mode>,2)
+         if ( fabs(data[0]-data[start]) < fabs(data[0]-data[end]) )      /* Interpolate to nearest neighbor         */
+             y[0] = data[start+K];
+         else
+             y[0] = data[end+K];
+     %endif
+     %if ISEQUAL(%<Mode>,3)
+         if (first < last)
+             if ( data[0] == data[end] )                                 /* Interpolate to lower neighbor           */
+                y[0] = data[end+K];
+             else
+                y[0] = data[start+K];
+         else
+             if ( data[0] == data[start] )
+                y[0] = data[start+K];
+             else
+                y[0] = data[end+K];
+     %endif
+     %if ISEQUAL(%<Mode>,4)
+         if (first < last)                                               /* Interpolate to higher neighbor          */
+             if ( data[0] == data[start] )
+                y[0] = data[start+K];
+             else
+                y[0] = data[end+K];
+         else
+            if ( data[0] == data[end] )
+               y[0] = data[end+K];
+            else
+               y[0] = data[start+K];
+     %endif
+   }
+}
+%endfunction
+
+%% [EOF] vartable.tlc

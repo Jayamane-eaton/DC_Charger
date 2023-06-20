@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+   <ModelName>SWC_InpMgmt_AFE</ModelName>
+   <SubsystemPath>SWC_InpMgmt_AFE</SubsystemPath>
+   <TestHarnessName>InpMgmt_AFE_Complex</TestHarnessName>
+   <SimulationTime>1</SimulationTime>
+   <LocalVariables/>
+   <TestSequences>
+      <Test>
+         <TopLevel>
+            <Name>InMgmt_Grid_Current_Pass</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(440)</SetInput>
+               <SetInput>HWInDCV_Actru=uint16(440)</SetInput>
+               <SetInput>HWInComRequestedDCV_Refru=uint16(0)</SetInput>
+               <SetInput>HWInAFE_SicTemp=false</SetInput>
+               <SetInput>BSWInAFE_GDR=false</SetInput>
+               <SetInput>UARTComm_Signal=false</SetInput>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Test that outputs contains initial values till 40ms.</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep>InMgmt_Grid_Current_Fail</NextStep>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>InMgmt_Grid_Current_Pass_SetValues</Name>
+            <Actions>
+               <SetInput>HWInGrid_IRru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(2149)</SetInput>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(40,msec)</Condition>
+               <NextStep>InMgmt_Grid_Current_Pass_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>InMgmt_Grid_Current_Pass_VerifyOutputs</Name>
+            <Actions>
+               <SetInput>HWInGrid_IRru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(2149)</SetInput>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>abs(InMgmtGrid_IRrf- 3.48667)&lt;=0.00001</Verify>
+               <Verify>abs(InMgmtGrid_IYrf- 3.48667)&lt;=0.00001</Verify>
+               <Verify>abs(InMgmtGrid_IBrf- 3.48667)&lt;=0.00001</Verify>
+            </Actions>
+            <Description>Verify fault status when input is not faulted</Description>
+            <Transition/>
+         </Step>
+      </Test>
+      <Test>
+         <TopLevel>
+            <Name>InMgmt_Grid_Current_Fail</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(440)</SetInput>
+               <SetInput>HWInDCV_Actru=uint16(440)</SetInput>
+               <SetInput>HWInComRequestedDCV_Refru=uint16(0)</SetInput>
+               <SetInput>HWInAFE_SicTemp=false</SetInput>
+               <SetInput>BSWInAFE_GDR=false</SetInput>
+               <SetInput>UARTComm_Signal=false</SetInput>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Test that outputs contains initial values till 40ms.</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep>InMgmt_Grid_Voltage_Pass</NextStep>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>InMgmt_Grid_Current_Fail_SetValues</Name>
+            <Actions>
+               <SetInput>HWInGrid_IRru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(2149)</SetInput>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(40,msec)</Condition>
+               <NextStep>InMgmt_Grid_Current_Fail_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>InMgmt_Grid_Current_Fail_VerifyOutputs</Name>
+            <Actions>
+               <SetInput>HWInGrid_IRru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(2149)</SetInput>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>abs(InMgmtGrid_IRrf- 4.00001)&lt;=0.00001</Verify>
+               <Verify>abs(InMgmtGrid_IYrf- 4.00001)&lt;=0.00001</Verify>
+               <Verify>abs(InMgmtGrid_IBrf-4.00001)&lt;=0.00001</Verify>
+            </Actions>
+            <Description>Verify fault status when input is not faulted</Description>
+            <Transition/>
+         </Step>
+      </Test>
+      <Test>
+         <TopLevel>
+            <Name>InMgmt_Grid_Voltage_Pass</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(440)</SetInput>
+               <SetInput>HWInDCV_Actru=uint16(440)</SetInput>
+               <SetInput>HWInComRequestedDCV_Refru=uint16(0)</SetInput>
+               <SetInput>HWInAFE_SicTemp=false</SetInput>
+               <SetInput>BSWInAFE_GDR=false</SetInput>
+               <SetInput>UARTComm_Signal=false</SetInput>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Test that outputs contains initial values till 40ms.</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep>InMgmt_Grid_Voltage_Fail</NextStep>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>InMgmt_Grid_Voltage_Pass_SetValues</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(2149)</SetInput>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(40,msec)</Condition>
+               <NextStep>InMgmt_Grid_Voltage_Pass_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>InMgmt_Grid_Voltage_Pass_VerifyOutputs</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(2149)</SetInput>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>abs(InMgmtGrid_VRrf- 16.7401)&lt;=0.00001</Verify>
+               <Verify>abs(InMgmtGrid_VYrf- 16.7401)&lt;=0.00001</Verify>
+               <Verify>abs(InMgmtGrid_VBrf-16.7401)&lt;=0.00001	</Verify>
+            </Actions>
+            <Description>Verify fault status when input is not faulted</Description>
+            <Transition/>
+         </Step>
+      </Test>
+      <Test>
+         <TopLevel>
+            <Name>InMgmt_Grid_Voltage_Fail</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(440)</SetInput>
+               <SetInput>HWInDCV_Actru=uint16(440)</SetInput>
+               <SetInput>HWInComRequestedDCV_Refru=uint16(0)</SetInput>
+               <SetInput>HWInAFE_SicTemp=false</SetInput>
+               <SetInput>BSWInAFE_GDR=false</SetInput>
+               <SetInput>UARTComm_Signal=false</SetInput>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Test that outputs contains initial values till 40ms.</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep>InMgmt_DCV_Act_rf</NextStep>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>InMgmt_Grid_Voltage_Fail_SetValues</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(2149)</SetInput>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(40,msec)</Condition>
+               <NextStep>InMgmt_Grid_Voltage_Fail_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>InMgmt_Grid_Voltage_Fail_VerifyOutputs</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(2149)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(2149)</SetInput>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>abs(InMgmtGrid_VRrf- 17.7401)&lt;=0.00001</Verify>
+               <Verify>abs(InMgmtGrid_VYrf- 17.7401)&lt;=0.00001</Verify>
+               <Verify>abs(InMgmtGrid_VBrf-17.7401)&lt;=0.00001	</Verify>
+            </Actions>
+            <Description>Verify fault status when input is not faulted</Description>
+            <Transition/>
+         </Step>
+      </Test>
+      <Test>
+         <TopLevel>
+            <Name>InMgmt_DCV_Act_rf</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(440)</SetInput>
+               <SetInput>HWInDCV_Actru=uint16(440)</SetInput>
+               <SetInput>HWInComRequestedDCV_Refru=uint16(0)</SetInput>
+               <SetInput>HWInAFE_SicTemp=false</SetInput>
+               <SetInput>BSWInAFE_GDR=false</SetInput>
+               <SetInput>UARTComm_Signal=false</SetInput>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Test that outputs contains initial values till 200us.</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep>InMgmt_AFE_RefDCV</NextStep>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>InMgmt_DCV_Act_rf_SetValues</Name>
+            <Actions>
+               <SetInput>HWInDCV_Actru=uint16(2149)</SetInput>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(40,msec)</Condition>
+               <NextStep>InMgmt_DCV_Act_rf_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>InMgmt_DCV_Act_rf_VerifyOutputs</Name>
+            <Actions>
+               <SetInput>HWInDCV_Actru=uint16(2149)</SetInput>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>abs(InMgmtDCV_Actrf- 1049.573)&lt;=0.0000001	</Verify>
+            </Actions>
+            <Description>Verify fault status when input is not faulted</Description>
+            <Transition/>
+         </Step>
+      </Test>
+      <Test>
+         <TopLevel>
+            <Name>InMgmt_AFE_RefDCV</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(440)</SetInput>
+               <SetInput>HWInDCV_Actru=uint16(440)</SetInput>
+               <SetInput>HWInComRequestedDCV_Refru=uint16(0)</SetInput>
+               <SetInput>HWInAFE_SicTemp=false</SetInput>
+               <SetInput>BSWInAFE_GDR=false</SetInput>
+               <SetInput>UARTComm_Signal=false</SetInput>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Test that outputs contains initial values till 200us.</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep>InMgmt_AFE_IGBTTemp</NextStep>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>InMgmt_AFE_RefDCV_SetValues</Name>
+            <Actions>
+               <SetInput>HWInComRequestedDCV_Refru=uint16(25)</SetInput>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(40,msec)</Condition>
+               <NextStep>InMgmt_AFE_RefDCV_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>InMgmt_AFE_RefDCV_VerifyOutputs</Name>
+            <Actions>
+               <SetInput>HWInComRequestedDCV_Refru=uint16(25)</SetInput>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>InMgmtRequested_DCVRefrf==uint16(25)	</Verify>
+            </Actions>
+            <Description>Verify fault status when input is not faulted</Description>
+            <Transition/>
+         </Step>
+      </Test>
+      <Test>
+         <TopLevel>
+            <Name>InMgmt_AFE_IGBTTemp</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(440)</SetInput>
+               <SetInput>HWInDCV_Actru=uint16(440)</SetInput>
+               <SetInput>HWInComRequestedDCV_Refru=uint16(0)</SetInput>
+               <SetInput>HWInAFE_SicTemp=false</SetInput>
+               <SetInput>BSWInAFE_GDR=false</SetInput>
+               <SetInput>UARTComm_Signal=false</SetInput>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Test that outputs contains initial values till 200us.</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep>InMgmt_BSWIn_AFE_GDR</NextStep>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>InMgmt_AFE_IGBTTemp_SetValues</Name>
+            <Actions>
+               <SetInput>HWInAFE_SicTemp=true</SetInput>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(40,msec)</Condition>
+               <NextStep>InMgmt_AFE_IGBTTemp_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>InMgmt_AFE_IGBTTemp_VerifyOutputs</Name>
+            <Actions>
+               <SetInput>HWInAFE_SicTemp=true</SetInput>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>InMgmtAFE_SicTemp==false</Verify>
+            </Actions>
+            <Description>Verify fault status when input is not faulted</Description>
+            <Transition/>
+         </Step>
+      </Test>
+      <Test>
+         <TopLevel>
+            <Name>InMgmt_BSWIn_AFE_GDR</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(440)</SetInput>
+               <SetInput>HWInDCV_Actru=uint16(440)</SetInput>
+               <SetInput>HWInComRequestedDCV_Refru=uint16(0)</SetInput>
+               <SetInput>HWInAFE_SicTemp=false</SetInput>
+               <SetInput>BSWInAFE_GDR=false</SetInput>
+               <SetInput>UARTComm_Signal=false</SetInput>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Test that outputs contains initial values till 200us.</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep>InMgmt_UART_Comm_Signal</NextStep>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>InMgmt_BSWIn_AFE_GDR_SetValues</Name>
+            <Actions>
+               <SetInput>BSWInAFE_GDR=true</SetInput>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(40,msec)</Condition>
+               <NextStep>InMgmt_BSWIn_AFE_GDR_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>InMgmt_BSWIn_AFE_GDR_VerifyOutputs</Name>
+            <Actions>
+               <SetInput>BSWInAFE_GDR=true</SetInput>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>InMgmtAFE_GDR==false</Verify>
+            </Actions>
+            <Description>Verify fault status when input is not faulted</Description>
+            <Transition/>
+         </Step>
+      </Test>
+      <Test>
+         <TopLevel>
+            <Name>InMgmt_UART_Comm_Signal</Name>
+            <Actions>
+               <SetInput>HWInGrid_VRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_VBru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IRru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IYru=uint16(220)</SetInput>
+               <SetInput>HWInGrid_IBru=uint16(440)</SetInput>
+               <SetInput>HWInDCV_Actru=uint16(440)</SetInput>
+               <SetInput>HWInComRequestedDCV_Refru=uint16(0)</SetInput>
+               <SetInput>HWInAFE_SicTemp=false</SetInput>
+               <SetInput>BSWInAFE_GDR=false</SetInput>
+               <SetInput>UARTComm_Signal=false</SetInput>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Test that outputs contains initial values till 200us.</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep/>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>InMgmt_UART_Comm_Signal_SetValues</Name>
+            <Actions>
+               <SetInput>UARTComm_Signal=true</SetInput>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(40,msec)</Condition>
+               <NextStep>InMgmt_UART_Comm_Signal_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>InMgmt_UART_Comm_Signal_VerifyOutputs</Name>
+            <Actions>
+               <SetInput>UARTComm_Signal=true</SetInput>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>InMgmtUARTComm_Signal==false</Verify>
+            </Actions>
+            <Description>Verify fault status when input is not faulted</Description>
+            <Transition/>
+         </Step>
+      </Test>
+   </TestSequences>
+</Root>

@@ -1,0 +1,18 @@
+
+
+%implements "xyinterp_f32_wrap" "C"
+
+
+%function BlockTypeSetup(block, system) void
+   %<LibAddToCommonIncludes("xyinterp_f32.h")>
+%endfunction
+
+%function Outputs(block, system) Output
+  %assign y_1 = LibBlockInputSignal(0, "", "", 0)
+  %assign y_0 = LibBlockInputSignal(1, "", "", 0)
+  %assign x_1 = LibBlockInputSignal(2, "", "", 0)
+  %assign x_0 = LibBlockInputSignal(3, "", "", 0)
+  %assign x = LibBlockInputSignal(4, "", "", 0)
+  %assign y = LibBlockOutputSignal(0, "", "", 0)
+  %<y> = xyinterp_f32(%<y_1>, %<y_0>, %<x_1>, %<x_0>, %<x>);
+%endfunction

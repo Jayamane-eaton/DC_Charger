@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+   <ModelName>SWC_InMgmtFOC</ModelName>
+   <SubsystemPath>SWC_InMgmtFOC/RE_InMgmtFOC_001_TEV_sys/EMCurr/InMgmtEMCurr</SubsystemPath>
+   <TestHarnessName>InMgmtEMCurr_OverrideTests</TestHarnessName>
+   <SimulationTime>1</SimulationTime>
+   <LocalVariables/>
+   <TestSequences>
+      <Test>
+         <TopLevel>
+            <Name>PhAMesPriOverrideOn</Name>
+            <Actions>
+               <SetInput>HwIn_iStar1MchPhAMesPri = uint16(0)</SetInput>
+               <SetInput>HwIn_iStar1MchPhBMesPri = uint16(0)</SetInput>
+               <SetInput>HwIn_iStar1MchPhCMesPri = uint16(0)</SetInput>
+               <SetInput>MMAcvDmpCtl_nMchShftSpdFil1 = single(1000)</SetInput>
+               <SetParam>InMgmtFOC_iStar1MchPhAMesPri_TC = single(0)</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhAMesPri_TO = false</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhBMesPri_TC = single(0)</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhBMesPri_TO = false</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhCMesPri_TC = single(0)</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhCMesPri_TO = false</SetParam>
+               <SetParam>InMgmtFOC_NumCurrCalCnts_C = uint32(1)</SetParam>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Check that Phase A primary current value equal to the expected, with override ON</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep>PhBMesPriOverrideOn</NextStep>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>PhAMesPriOverrideOn_SetValues</Name>
+            <Actions>
+               <SetParam>InMgmtFOC_iStar1MchPhAMes_TO = true</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhAMes_TC = single(100)</SetParam>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(2,msec)</Condition>
+               <NextStep>PhAMesPriOverrideOn_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>PhAMesPriOverrideOn_VerifyOutputs</Name>
+            <Actions>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>InMgmtEMCurr_iStar1MchPhAMes == single(100)</Verify>
+            </Actions>
+            <Description>Verify outputs</Description>
+            <Transition/>
+         </Step>
+      </Test>
+      <Test>
+         <TopLevel>
+            <Name>PhBMesPriOverrideOn</Name>
+            <Actions>
+               <SetInput>HwIn_iStar1MchPhAMesPri = uint16(0)</SetInput>
+               <SetInput>HwIn_iStar1MchPhBMesPri = uint16(0)</SetInput>
+               <SetInput>HwIn_iStar1MchPhCMesPri = uint16(0)</SetInput>
+               <SetInput>MMAcvDmpCtl_nMchShftSpdFil1 = single(1000)</SetInput>
+               <SetParam>InMgmtFOC_iStar1MchPhAMesPri_TC = single(0)</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhAMesPri_TO = false</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhBMesPri_TC = single(0)</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhBMesPri_TO = false</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhCMesPri_TC = single(0)</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhCMesPri_TO = false</SetParam>
+               <SetParam>InMgmtFOC_NumCurrCalCnts_C = uint32(1)</SetParam>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Check that Phase B primary current value equal to the expected, with override ON</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep>PhCMesPriOverrideOn</NextStep>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>PhBMesPriOverrideOn_SetValues</Name>
+            <Actions>
+               <SetParam>InMgmtFOC_iStar1MchPhBMes_TO = true</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhBMes_TC = single(100)</SetParam>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(2,msec)</Condition>
+               <NextStep>PhBMesPriOverrideOn_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>PhBMesPriOverrideOn_VerifyOutputs</Name>
+            <Actions>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>InMgmtEMCurr_iStar1MchPhBMes == single(100)</Verify>
+            </Actions>
+            <Description>Verify outputs</Description>
+            <Transition/>
+         </Step>
+      </Test>
+      <Test>
+         <TopLevel>
+            <Name>PhCMesPriOverrideOn</Name>
+            <Actions>
+               <SetInput>HwIn_iStar1MchPhAMesPri = uint16(0)</SetInput>
+               <SetInput>HwIn_iStar1MchPhBMesPri = uint16(0)</SetInput>
+               <SetInput>HwIn_iStar1MchPhCMesPri = uint16(0)</SetInput>
+               <SetInput>MMAcvDmpCtl_nMchShftSpdFil1 = single(1000)</SetInput>
+               <SetParam>InMgmtFOC_iStar1MchPhAMesPri_TC = single(0)</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhAMesPri_TO = false</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhBMesPri_TC = single(0)</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhBMesPri_TO = false</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhCMesPri_TC = single(0)</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhCMesPri_TO = false</SetParam>
+               <SetParam>InMgmtFOC_NumCurrCalCnts_C = uint32(1)</SetParam>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Check that Phase C primary current value equal to the expected, with override ON</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep>CurrentSensorCalOKOverride</NextStep>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>PhCMesPriOverrideOn_SetValues</Name>
+            <Actions>
+               <SetParam>InMgmtFOC_iStar1MchPhCMes_TO = true</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhCMes_TC = single(100)</SetParam>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(2,msec)</Condition>
+               <NextStep>PhCMesPriOverrideOn_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>PhCMesPriOverrideOn_VerifyOutputs</Name>
+            <Actions>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>InMgmtEMCurr_iStar1MchPhCMes == single(100)</Verify>
+            </Actions>
+            <Description>Verify outputs</Description>
+            <Transition/>
+         </Step>
+      </Test>
+      <Test>
+         <TopLevel>
+            <Name>CurrentSensorCalOKOverride</Name>
+            <Actions>
+               <SetInput>HwIn_iStar1MchPhAMesPri = uint16(0)</SetInput>
+               <SetInput>HwIn_iStar1MchPhBMesPri = uint16(0)</SetInput>
+               <SetInput>HwIn_iStar1MchPhCMesPri = uint16(0)</SetInput>
+               <SetInput>MMAcvDmpCtl_nMchShftSpdFil1 = single(1000)</SetInput>
+               <SetParam>InMgmtFOC_iStar1MchPhAMesPri_TC = single(0)</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhAMesPri_TO = false</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhBMesPri_TC = single(0)</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhBMesPri_TO = false</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhCMesPri_TC = single(0)</SetParam>
+               <SetParam>InMgmtFOC_iStar1MchPhCMesPri_TO = false</SetParam>
+               <SetParam>InMgmtFOC_NumCurrCalCnts_C = uint32(1)</SetParam>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Check that Current sensor cal complete and OK is as expected, with override ON</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep/>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>CurrentSensorCalOKOverride_SetValues</Name>
+            <Actions>
+               <SetParam>InMgmtFOC_CurrSensCalOK_TO = true</SetParam>
+               <SetParam>InMgmtFOC_CurrSensCalOK_TC = true</SetParam>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(2,msec)</Condition>
+               <NextStep>CurrentSensorCalOKOverride_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>CurrentSensorCalOKOverride_VerifyOutputs</Name>
+            <Actions>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>InMgmtEMCurr_CurrSensCalOK == true</Verify>
+            </Actions>
+            <Description>Verify outputs</Description>
+            <Transition/>
+         </Step>
+      </Test>
+   </TestSequences>
+</Root>

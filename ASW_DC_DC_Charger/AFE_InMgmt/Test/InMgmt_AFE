@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+   <ModelName>SWC_InpMgmt_AFE</ModelName>
+   <SubsystemPath>SWC_InpMgmt_AFE</SubsystemPath>
+   <TestHarnessName>InMgmt_AFE</TestHarnessName>
+   <SimulationTime>1</SimulationTime>
+   <LocalVariables/>
+   <TestSequences>
+      <Test>
+         <TopLevel>
+            <Name>InMgmt_AFE_INIT</Name>
+            <Actions>
+               <SetInput>HWIn_Grid_V_RYB_ru=Grid_VRYB.Grid_VR</SetInput>
+               <SetInput>HWIn_Grid_I_RYB_ru=440</SetInput>
+               <SetInput>HWIn_DCV_Act_ru=440</SetInput>
+               <SetInput>HWInCom_Requested_DCV_Ref_ru=0</SetInput>
+               <SetInput>HWIn_AFE_IGBTTemp=0</SetInput>
+               <SetInput>BSWIn_AFE_GDR=0</SetInput>
+               <SetLocalVar>endTest = false</SetLocalVar>
+            </Actions>
+            <Description>Test that outputs contains initial values till 200us.</Description>
+            <Transition>
+               <Condition>endTest == true</Condition>
+               <NextStep/>
+            </Transition>
+         </TopLevel>
+         <Step>
+            <Name>InMgmt_AFE_INIT_SetValues</Name>
+            <Actions>
+               <SetInput>HWIn_DCV_Act_ru=1</SetInput>
+            </Actions>
+            <Description>Set test variables</Description>
+            <Transition>
+               <Condition>after(400,msec)</Condition>
+               <NextStep>InMgmt_AFE_INIT_VerifyOutputs</NextStep>
+            </Transition>
+         </Step>
+         <Step>
+            <Name>InMgmt_AFE_INIT_VerifyOutputs</Name>
+            <Actions>
+               <SetInput>HWIn_DCV_Act_ru=1</SetInput>
+               <SetLocalVar>endTest = true</SetLocalVar>
+               <Verify>InMgmt_DCV_Act_rf=1	</Verify>
+            </Actions>
+            <Description>Verify fault status when input is not faulted</Description>
+            <Transition/>
+         </Step>
+      </Test>
+   </TestSequences>
+</Root>
